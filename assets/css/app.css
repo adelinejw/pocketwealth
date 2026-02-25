@@ -1,0 +1,291 @@
+/* App-specific styles for the dashboard */
+.app-topbar{background:#fff;border-bottom:1px solid rgba(15,23,42,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.04);}
+.app-topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:12px}
+.app-grid{display:grid;grid-template-columns:280px 1fr;gap:18px}
+.app-sidebar{padding:12px}
+.app-content .card{margin-bottom:12px}
+.app-main{padding:24px 0}
+.hidden{display:none}
+
+@media (max-width:900px){.app-grid{grid-template-columns:1fr}}
+
+/* New app page styles */
+:root{--blue:#0b66ff;--muted:#6b7280;--bg:#f7f9ff;--card:#fff}
+/* Extended theme tokens */
+:root{
+	--brand-start:#0b66ff;
+	--brand-mid:#3aa0ff;
+	--brand-end:#7c3aed;
+	--glass-bg: rgba(255,255,255,0.75);
+	--glass-border: rgba(11,22,34,0.08);
+	--card-grad: linear-gradient(180deg,#ffffff,#fbfdff);
+}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial;margin:0;color:#071026;background:var(--bg)}
+.app-root{max-width:1100px;margin:18px auto;padding:12px}
+.app-header{display:flex;align-items:center;justify-content:space-between;padding:12px 12px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:14px; backdrop-filter:saturate(140%) blur(8px); box-shadow:0 10px 30px rgba(11,22,34,0.06)}
+.app-header .brand{height:36px; transform:scale(1.18); transform-origin:left center; display:block}
+.app-tabs{display:flex;gap:6px;padding:6px 0;margin-bottom:10px}
+.tab{background:transparent;border:1px solid rgba(11,102,255,0.08);padding:6px 10px;border-radius:10px;cursor:pointer;transition: all 160ms ease;font-size:0.95rem}
+.tab:hover{background:rgba(11,102,255,0.06);color:var(--blue);box-shadow:0 4px 10px rgba(11,102,255,0.06)}
+.tab.active{background:linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end));background-size:200% 200%;animation: activeTabShift 6s ease infinite;color:#fff;box-shadow:0 10px 24px rgba(11,22,34,0.12)}
+.card{background:var(--card);background-image:var(--card-grad);padding:16px;border-radius:16px;box-shadow:0 8px 22px rgba(11,22,34,0.06);margin:8px;transition: transform 180ms ease, box-shadow 180ms ease}
+.card:hover{transform: translateY(-4px); box-shadow:0 16px 36px rgba(11,22,34,0.10)}
+
+/* Recommended highlight: thin gradient ring + floating badge */
+.card.recommended{
+	position:relative;
+	border:2px solid transparent;
+	border-radius:16px;
+	border-image: linear-gradient(90deg, #ffd89b, #ff7eb3, #7bc6ff) 1;
+}
+.card.recommended .rec-badge{
+	position:absolute;
+	top:-10px;
+	right:12px;
+	background: linear-gradient(90deg,#ff7eb3,#7bc6ff);
+	color:#fff;
+	padding:6px 10px;
+	border-radius:999px;
+	font-weight:700;
+	font-size:12px;
+	box-shadow: 0 10px 24px rgba(11,22,34,0.12);
+}
+.grid.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.big{font-size:1.3rem;font-weight:700}
+.market{display:flex;flex-direction:column;gap:6px}
+.buyAmt{width:120px}
+.btn{background:var(--blue);color:#fff;border:none;padding:8px 12px;border-radius:10px;cursor:pointer}
+.btn{transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease}
+.btn:hover{transform: translateY(-1px); box-shadow:0 10px 22px rgba(11,102,255,0.18)}
+.btn:active{transform: translateY(0)}
+.btn-ghost{background:transparent;border:1px solid rgba(11,102,255,0.16);color:var(--blue)}
+.btn-ghost:hover{background:rgba(11,102,255,0.06)}
+.btn[aria-busy="true"]{opacity:0.6;pointer-events:none}
+.btn[disabled]{opacity:0.6;pointer-events:none}
+.btn.loading::after{content:'\2026';margin-left:8px}
+.quick-actions{display:flex;gap:8px;align-items:center;margin-top:12px}
+.card.market{width:260px}
+@media(max-width:720px){.charts-grid{grid-template-columns:1fr}.grid.cards{grid-template-columns:1fr}}
+
+/* Market styles */
+.market-table{width:100%;border-collapse:collapse}
+.market-table th,.market-table td{padding:8px;border-bottom:1px solid rgba(11,22,34,0.04);text-align:left}
+.market-controls{display:flex;gap:8px;align-items:center}
+.price-up{color:#00b37a;font-weight:600}
+.price-down{color:#ff4d4f;font-weight:600}
+.price-moving{font-style:italic;color:var(--muted)}
+.muted.small{font-size:0.85rem;color:var(--muted)}
+.premium-upsell{opacity:0.95}
+
+/* Premium subscription buttons: ensure Activate buttons align across cards */
+.premium-two-col .card{display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;min-height:240px;padding:20px;box-sizing:border-box}
+.premium-two-col .card .btn{min-width:200px;max-width:100%;box-sizing:border-box}
+.premium-two-col .card .btn.btn-ghost{min-width:120px}
+.premium-two-col .card > div:last-child{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:auto}
+
+/* Title, price and list spacing inside premium cards */
+.premium-two-col .card h3{margin:0 0 8px;text-align:center}
+.premium-two-col .card > div:nth-of-type(1){font-size:18px;font-weight:700;margin:0 0 12px;text-align:center}
+.premium-two-col .card ul{flex:1;margin:0 0 12px 18px;text-align:left;font-size:0.95rem;line-height:1.45;color:var(--muted);}
+
+/* Pro highlight: thin gradient border (ring) and recommended badge */
+.premium-two-col .card.pro{
+	position:relative;
+	border-radius:12px;
+	border:2px solid transparent;
+	/* gradient border via border-image for broad compatibility */
+	border-image: linear-gradient(90deg, #ffd89b, #ff7eb3, #7bc6ff) 1;
+	box-shadow: 0 8px 28px rgba(11,22,34,0.04);
+	padding-top:18px; /* ensure visual space for the badge placed slightly above the card */
+}
+.premium-two-col .card.pro .pro-badge{
+	position:absolute;
+	/* place the badge slightly outside the card so it doesn't cover heading/content */
+	top: -12px;
+	right: 16px;
+	transform: translateY(-0%);
+	background: linear-gradient(90deg,#ff7eb3,#7bc6ff);
+	color:#fff;
+	padding:6px 12px;
+	border-radius:16px;
+	font-weight:700;
+	font-size:12px;
+	box-shadow: 0 12px 30px rgba(11,22,34,0.12);
+	z-index:3;
+	pointer-events:auto;
+}
+.premium-two-col .card.pro h3{position:relative;z-index:1}
+
+/* full-width market layout */
+.market-wrap{display:flex;gap:24px;width:100%;align-items:flex-start}
+.market-watch{width:30%;min-width:260px}
+.market-detail{flex:1}
+
+@media (max-width:920px){
+	.market-wrap{flex-direction:column}
+	.market-watch{width:100%;min-width:0}
+}
+
+.market-status{display:flex;align-items:center;gap:8px}
+.market-status .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.market-running{background:var(--blue)}
+.market-paused{background:#c7cdd6}
+
+.detail-price-up{color:#007a3d}
+.detail-price-down{color:#c92a2a}
+
+/* modal */
+.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(3,6,23,0.4);display:flex;align-items:flex-start;justify-content:center;z-index:1400}
+.modal.hidden{display:none}
+.modal-card{border-radius:12px}
+
+/* Activity list entries */
+#activityList .activity-row{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid rgba(11,22,34,0.04)}
+#activityList .activity-row:last-child{border-bottom:none}
+.activity-type{padding:6px 8px;border-radius:999px;font-weight:600}
+.type-buy{background:#e6fbef;color:#007a3d}
+.type-sell{background:#ffecec;color:#c92a2a}
+.type-premium{background:#e8f0ff;color:#0b66ff}
+.type-robo{background:#f3e8ff;color:#7c3aed}
+.type-system{background:#f3f4f6;color:#6b7280}
+
+/* Portfolio table */
+#portfolioContent table{width:100%;border-collapse:collapse}
+#portfolioContent th,#portfolioContent td{padding:8px;border-bottom:1px solid rgba(11,22,34,0.04);text-align:left}
+
+/* Buy/Sell button sizing */
+.btn-large{height:48px;border-radius:999px;padding:12px 18px}
+@media(max-width:720px){ .btn-large{width:100%} }
+
+/* Wide container and responsive max widths */
+.app-wide{width:100%;padding:16px;box-sizing:border-box}
+.app-container{max-width:1440px;margin:18px auto;padding:16px}
+@media(max-width:1280px){ .app-container{max-width:1280px} }
+@media(max-width:1024px){ .app-container{max-width:1200px} }
+@media(max-width:720px){ .app-container{padding:12px;margin:12px} }
+
+/* KPI grid (12-column) */
+.kpi-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.kpi-card{grid-column:span 3; position:relative; overflow:hidden; background-image: linear-gradient(180deg,#ffffff,#f7fbff)}
+.kpi-card::before{content:""; position:absolute; left:0; right:0; top:0; height:4px; background: linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end)); opacity:0.9}
+.kpi-card h4{margin-top:4px}
+@media(max-width:1280px){ .kpi-card{grid-column:span 4} }
+@media(max-width:720px){ .kpi-card{grid-column:span 6} }
+
+/* Two-column layout for portfolio + recent activity */
+.two-col-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.two-col-grid > #portfolioCard{grid-column:span 12}
+/* removed recentActivityCard styles (panel removed) */
+@media(max-width:1024px){ .two-col-grid > #portfolioCard{grid-column:span 7} }
+@media(max-width:720px){ .two-col-grid{grid-template-columns:1fr} .two-col-grid > #portfolioCard,.two-col-grid > #recentActivityCard{grid-column:span 1} }
+
+/* Market watchlist: avoid being covered by chart panel, allow scrolling */
+.market-watch{width:32%;min-width:280px;max-width:540px;z-index:700;overflow:hidden}
+.market-watch table{width:100%;border-collapse:collapse;table-layout:fixed}
+/* allow scrolling the whole watchlist container (header will scroll with it) */
+.market-watch{max-height:520px;overflow-y:auto;padding-right:8px}
+
+/* Sticky header so table headings remain visible */
+.market-watch thead th{position:sticky;top:0;background:var(--card);z-index:20}
+.market-detail{flex:1;min-width:420px}
+.market-watch::-webkit-scrollbar{width:10px}
+.market-watch::-webkit-scrollbar-thumb{background:rgba(11,22,34,0.06);border-radius:8px}
+
+/* Watchlist row hover & focus */
+.market-table tbody tr:hover{background:linear-gradient(90deg, rgba(11,102,255,0.06), transparent)}
+.market-table tbody tr:focus{background:linear-gradient(90deg, rgba(11,102,255,0.06), transparent);outline:none}
+
+/* Row sizing and column behaviours */
+.market-table td, .market-table th{padding:10px 12px;line-height:1.3;vertical-align:middle;border-bottom:1px solid rgba(11,22,34,0.04)}
+.market-table tbody tr{min-height:56px}
+.market-table td.col-symbol{white-space:normal;word-break:break-word;font-size:15px}
+.market-table td.col-symbol .muted.small{font-size:12px;color:var(--muted);margin-top:4px}
+.market-table td.col-last, .market-table td.col-24h, .market-table td.col-vol{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+.market-table td.col-24h{min-width:72px}
+.market-table td.col-action{width:92px;text-align:right}
+
+/* Responsive adjustments */
+@media(min-width:1200px){ .market-table{font-size:15px} }
+@media(max-width:1199px) and (min-width:768px){ .market-watch{min-width:240px;max-width:420px} .market-wrap{gap:18px} }
+@media(max-width:767px){ /* stack or hide vol */ .market-table td.col-vol{display:none} .market-table td{font-size:14px} }
+
+/* order actions: large pill buttons under chart */
+.order-actions{display:flex;gap:12px;align-items:center;margin-top:8px}
+.order-actions .btn{flex:1}
+
+/* accessibility: visible focus outlines */
+.btn:focus,.tab:focus,.tradeBtn:focus,.quickSell:focus{outline:3px solid rgba(11,102,255,0.18);outline-offset:3px}
+
+/* spacing rhythm tweak for wider layouts */
+.app-content .card{margin-bottom:16px}
+.charts-grid{gap:16px}
+
+/* Animated active tab gradient */
+@keyframes activeTabShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* Soft aurora background behind content */
+.app-content{position:relative; overflow:hidden}
+.app-content::before{
+	content:""; position:absolute; inset:-80px -40px; z-index:-1;
+	background:
+		radial-gradient(1200px 600px at 10% 10%, rgba(11,102,255,0.10), transparent 60%),
+		radial-gradient(900px 500px at 80% 0%, rgba(124,58,237,0.10), transparent 60%),
+		radial-gradient(800px 500px at 50% 90%, rgba(0,179,122,0.10), transparent 60%);
+	filter: blur(30px);
+	animation: auroraFloat 22s ease-in-out infinite alternate;
+}
+@keyframes auroraFloat{
+	0%{ transform: translateY(-6px) }
+	50%{ transform: translateY(6px) }
+	100%{ transform: translateY(-6px) }
+}
+
+/* Reduce motion preferences */
+@media (prefers-reduced-motion: reduce){
+	.tab.active{animation:none}
+	.app-content::before{animation:none}
+	.card{transition:none}
+	.btn{transition:none}
+}
+
+/* --- Game tab: make block fit to window --- */
+/* Ensure the Game tab takes the full remaining viewport height and the inner surface stretches */
+.tab-panel[data-content="game"]{ padding: 0; }
+.game-root{
+	display:block;
+	width:100%;
+	/* Let content define height so footer appears right after the last block */
+	min-height:auto;
+}
+/* Stretch the mounted React container to fill the space */
+.game-root #paperTradingGameRoot{ display:block; }
+/* Override Tailwind max-w container inside the game so it can span the available width/height */
+.game-root .max-w-6xl{ max-width:100%; width:100%; height:auto; margin-left:0; margin-right:0; padding-left:12px; padding-right:12px; box-sizing:border-box; }
+/* Main rounded surface should fill height and allow its grid to expand */
+.game-root .rounded-3xl{ min-height:auto; display:flex; flex-direction:column; }
+.game-root .grid{ flex:initial; min-height:auto; }
+
+/* Small margin under the trivia card so the footer sits neatly below */
+.trivia-card{ margin-bottom:16px; }
+
+/* Trivia block spacing so footer sits beneath it comfortably */
+.trivia-card{ margin-bottom: 24px; }
+
+/* Achievements styling -------------------------------------------------- */
+/* Card wrapper with optional gradient border when unlocked */
+.ach-card{ position:relative; border-radius:12px; background:#fff; overflow:hidden; min-height:220px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:8px; }
+.ach-card .ach-icon{ margin-bottom:4px; }
+.ach-card .ach-body{ max-width:92%; margin:0 auto; }
+.ach-card.ach-locked{ background:#f6f8fc; border:1px solid rgba(11,22,34,0.06); filter:grayscale(1); opacity:0.8; }
+.ach-card.ach-locked .ach-body{ color:#9aa4b2; }
+.ach-card.ach-locked .ach-body .font-semibold{ color:#94a3b8; }
+.ach-card.ach-locked .ach-icon{ opacity:0.6; }
+.ach-card.ach-unlocked{ background:#fff; border:3px solid rgba(11,102,255,0.28); }
+/* Remove gradient ring and revert to simple blue border */
+.ach-card.ach-unlocked::before{ content:none; }
+/* Status pill */
+.ach-pill{ font-size:11px; line-height:1; padding:4px 8px; border-radius:999px; display:inline-block; }
+.ach-pill.unlocked{ color:var(--blue); background: rgba(11,102,255,0.08); border:1px solid rgba(11,102,255,0.22); box-shadow:none; }
+.ach-pill.locked{ color:#6b7280; background:#eef2f7; border:1px solid rgba(11,22,34,0.1); }
+

@@ -1,0 +1,134 @@
+PocketWealth — System Design and Logic Overview (v1.0.0)
+Updated: 2025-10-29
+
+1) Architecture
+---------------
+- Client-first static app and marketing site. Optional teaching backend available under `server/` (Node + Express + Lowdb).
+- Single-page experience embedded in `PocketWealth.html` with an app shell (`#app-shell`) that activates after sign-in.
+- State persisted in browser localStorage (users, sessions, market series, achievements, settings).
+- Charts rendered with Chart.js; mini-apps (Paper Trading Game, Quiz) rendered via React UMD.
+
+Optional backend overview
+-------------------------
+- Endpoints: POST /api/register, /api/login, /api/topup, /api/subscribe; GET /api/statement
+- Sessions: `sid` tokens issued at login, stored server-side in a JSON DB
+- Storage: Lowdb JSON at `server/data/db.json`
+- Port: 5173; CORS enabled for local development
+
+2) High-level modules
+---------------------
+- Marketing Site: hero, features, FAQ, charts; opens registration/sign-in modals.
+- App Core (assets/js/app.js, app-core.js):
+  • Auth (register, sign-in/out), session persistence, app-only mode toggle.
+  • Navigation (tabs): Dashboard, Market, Invest, Activity, Admin, Game.
+  • Premium toggle logic and impact demo.
+  • PocketWealth Assistant (chatbot): floating button UI, rule-based intents, in-app navigation.
+- Dashboard:
+  • Portfolio KPIs, Allocation donut, Performance line chart, recent activity.
+  • Top-up (modal with validation and idempotent ledger id) and Withdraw actions.
+- Market Engine:
+  • Random-walk price generator with volatility presets and optional mood multiplier.
+  • Watchlist + symbol detail with live Chart.js line chart.
+  • Order ticket and snapshot confirmation modal (executes at captured price).
+- Portfolio & P&L:
+  • Holdings model (ticker, qty, average cost, last price, value).
+  • KPIs and per-holding P&L computed live.
+- Activity & Trust Log:
+  • Human-readable activity rows and CSV export (date/time, action, type).
+- Admin Panel:
+  • Seeded admin account; user lookup; gifting; global counters & CSV exports.
+- Paper Trading Game (assets/js/paper-trading-game.js):
+  • Game loop with monthly advances (up to 12 months), holdings table and metrics.
+  • Achievements system with localStorage persistence and UI glow effects.
+  • Risk vs Reward Simulator (separate box) with interactive chart and insights.
+  • Investor Trivia Quest mini-quiz (educational reward loop).
+ - Assistant logic (assets/js/app-core.js):
+  • Keyword/phrase matching against a curated knowledge base (small talk, balance, premium, performance).
+  • App navigation side effects (calls `selectTab(...)`, focuses buttons where relevant).
+  • Computes realised monthly P&L using ledger and reconstructs holdings state for accuracy.
+  • Session-scoped conversation history stored in sessionStorage; reset on page reload.
+- Invest & Shariah:
+  • Card grid with type tags and descriptions; deep-link to Market.
+  • Robo-based “Recommended” badges after the risk quiz.
+  • Shariah Market (Pro): curated certified symbols, Buy/Follow actions, and 24h change labels.
+- Robo-Advisory:
+  • Risk quiz (modal) with 4 randomized questions per run; computes score and label.
+  • Suggested allocation and tickers; summary block with mini donut chart.
+  • ESG scoring (Pro): Overall gauge, E/S/G bars, Radar; explanatory text.
+- Premium & Plans:
+  • Starter (Robo) and Pro (all features). One-click subscribe/unsubscribe.
+  • Charges simulated via ledger entries; unlock gating for Shariah and ESG.
+- Statement:
+  • Normalized ledger, filters (Month/Year/Type/Search), summary metrics (Cash-in, Realised P&L), pagination (50/page).
+  • User-friendly type labels (e.g., Invest/Sell/Cash-in). Auto-jumps to newest active month.
+- Learning:
+  • Anchor navigation and subtle fade-in effects for content sections.
+
+3) Data models (stored in localStorage)
+---------------------------------------
+- User (pw_users): { id, email, username, password, createdAt, premiumActive, premiumActivatedAt, premiumHistory[], cashBalanceMYR? }
+- Session (pw_session): { email, loginAt }
+- Market series (per symbol): { lastPrice, history[], volatility }
+- Holding: { ticker, qty, avgCost, priceRM, value }
+- Activity: { id, timestampISO, type (MARKET_BUY/SELL/PREMIUM_*), actionText }
+- Achievement: { id, section, icon, name, description, unlocked, unlockedAt? }
+- Game save (pw_paper_trading_game): { phase, cash, holdings[], watchlist[], month, history[], leaderboard[] }
+- Ledger: newest-first normalized entries { id, ts, type, symbol?, qty?, price?, amount }
+- Snapshots: periodic portfolio snapshots for performance charting { ts, total }
+
+4) Key algorithms and calculations
+----------------------------------
+- Random-walk price step: price ← price * exp(mu + sigma * Z), Z ~ N(0,1)
+- Paper Trading month advance: apply random-walk by symbol volatility preset
+- Average-cost basis on buys: newAvg = (prevAvg*prevQty + price*qty) / (prevQty+qty)
+- P&L: value = qty * lastPrice; unrealised P&L = (lastPrice - avgCost) * qty
+- Risk vs Reward simulation: generate lognormal series from sliders (risk, amount, months)
+- Metrics: return %, max drawdown %, volatility (std dev of monthly returns)
+- Diversification: Herfindahl-Hirschman Index over holding values
+- Achievement unlock rules: thresholds on return%, max drawdown%, HHI, holdings count, months, games played
+
+5) UI flows
+-----------
+- Registration → persists user in pw_users; sign-in sets pw_session; app-only UI appears.
+- Market trade → open snapshot modal → confirm → update holdings, activity, KPIs.
+- Game → Reset to start → Buy from Watchlist → Next Month or Fast-Forward → Save Result.
+- Simulator → adjust sliders → Simulate → chart animates → metrics and insights appear.
+- Admin → find users, gift balances, export CSV.
+- Premium → choose Starter/Pro → balance deducted → flags set → gated features unlocked; Unsubscribe reverses access (no refund).
+- Robo → take quiz → results saved → Invest tab recommendations and Robo summary appear; Pro users can view ESG dashboards.
+- Statement → choose Month/Year/Type/Search → view rows with pagination → summary metrics update.
+
+6) State and events
+-------------------
+- localStorage keys: pw_users, pw_session, pw_paper_trading_game, pw-achievements, market_* keys.
+- Cross-component notifications: CustomEvent('pw:achievements-updated') to refresh achievements UI.
+ - Assistant chat history: sessionStorage key `pw_assistant_hist` (cleared on reload).
+- Additional keys/events:
+  • pw_tab — last selected tab (for persistence across reloads).
+  • market.volatilityMode — calm/normal/volatile; affects price walk.
+  • ledger:changed — triggers dashboard and statement refreshes.
+
+7) Security, accessibility, performance
+---------------------------------------
+- Security: client-side demo only; do not store real credentials; no server-side protection.
+- Accessibility: semantic HTML where practical, focus states, keyboard-accessible modals; Lighthouse audit recommended.
+- Performance: lightweight, no bundler; images/SVG optimized; charts updated on requestAnimationFrame intervals.
+
+8) File map (selected)
+----------------------
+- PocketWealth.html — marketing + embedded app shell
+- app.html — app-only shell (dev/testing)
+- assets/js/app.js — core app logic and tabs
+- assets/js/app-core.js — helpers and voice/command shortcuts
+- assets/js/charts.js — marketing/app charts (Chart.js)
+- assets/js/paper-trading-game.js — Game, Achievements, Simulator, Quiz
+- assets/css/styles.css — marketing + shared styles
+- assets/css/app.css, assets/css/app-page.css — in-app UI
+- data/*.json — demo datasets
+
+9) Extensibility notes
+----------------------
+- Replace random-walk with real market data by swapping the price feed and lastPrice updates.
+- Swap localStorage for a backend (REST/GraphQL) and migrate session/auth flows.
+- Add tests around trade settlement, CSV export, and P&L math before refactors.
+ - Assistant: upgrade from keyword matching to a server-based NLU/LLM if needed; preserve the UI shell and message plumbing.

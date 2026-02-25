@@ -1,0 +1,7 @@
+{
+  "tiers": [
+    {"min_myr":0,"max_myr":199.99,"fee_bps":0},
+    {"min_myr":200,"max_myr":9999.99,"fee_bps":35},
+    {"min_myr":10000,"max_myr":9999999,"fee_bps":25}
+  ]
+}

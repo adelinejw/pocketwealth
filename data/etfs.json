@@ -1,0 +1,8 @@
+{
+  "etfs": [
+    {"ticker":"MYETF1","name":"ASEAN Growth ETF","assetClass":"Equity","weight":40},
+    {"ticker":"MYETF2","name":"Global Tech ETF","assetClass":"Equity","weight":30},
+    {"ticker":"MYETF3","name":"Global Bond ETF","assetClass":"Fixed Income","weight":20},
+    {"ticker":"MYETF4","name":"Cash","assetClass":"Cash","weight":10}
+  ]
+}

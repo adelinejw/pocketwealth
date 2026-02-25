@@ -1,0 +1,8 @@
+{
+  "AAPL": { "name": "Apple Inc.", "price": 175.00, "type":"equity" },
+  "MSFT": { "name": "Microsoft Corp.", "price": 330.00, "type":"equity" },
+  "SPY": { "name": "S&P 500 ETF", "price": 450.00, "type":"equity" },
+  "EIMY": { "name": "iShares MSCI EM ETF", "price": 30.00, "type":"equity" },
+  "GLD": { "name": "Gold ETF", "price": 160.00, "type":"commodity" },
+  "AGG": { "name": "Aggregate Bond ETF", "price": 110.00, "type":"bond" }
+}

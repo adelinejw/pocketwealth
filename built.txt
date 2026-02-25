@@ -1,0 +1,92 @@
+PocketWealth — Dependencies and Assets (Final v1.0.0)
+Updated: 2025-10-29
+
+Purpose
+-------
+This document lists the runtime dependencies, assets, and data files used by the PocketWealth website and demo app so maintainers understand what the site needs to run.
+
+Runtime dependencies (no build tools required)
+----------------------------------------------
+External libraries loaded via CDN:
+- Chart.js (for charts on marketing pages, Dashboard, Market detail, Robo ESG, and Admin)
+	• Typical CDN: https://cdn.jsdelivr.net/npm/chart.js
+- React + ReactDOM (UMD) — used by the Paper Trading Game and mini-quiz components
+	• Typical CDN: https://unpkg.com/react@18/umd/react.production.min.js
+	• Typical CDN: https://unpkg.com/react-dom@18/umd/react-dom.production.min.js
+
+Browser APIs used (no polyfills required for modern browsers):
+- localStorage (user accounts, sessions, market series, achievements)
+- DOM APIs (query selectors, events, CustomEvent for cross-component notifications)
+- Date/Intl APIs for formatting
+ - sessionStorage (Assistant chat history for current page session)
+
+Internal modules (no external packages):
+- assets/js/app.js — app shell, auth/session, navigation, premium toggle, admin, activity
+- assets/js/charts.js — marketing/overview charts (Chart.js wrapper)
+- assets/js/market.js (if present inside app.js) — simulated market loop and UI wiring
+- assets/js/paper-trading-game.js — Paper Trading Game, Achievements, Risk vs Reward Simulator
+- assets/js/app-page.js / app-core.js — page-level glue (tab switching, helpers)
+ - PocketWealth Assistant (chatbot) — implemented in `assets/js/app-core.js`, rule-based intents; no external AI services or libraries
+
+Backend (optional) runtime dependencies
+--------------------------------------
+If you choose to run the teaching backend located in `server/`:
+- express ^4.18.2 — HTTP server and routing
+- cors ^2.8.5 — Cross-origin resource sharing (enabled for local dev)
+- lowdb ^5.0.0 — Lightweight JSON database (`server/data/db.json`)
+- bcrypt ^5.1.0 — Password hashing (10 rounds)
+- nanoid ^4.0.0 — ID generation
+
+Quick start (backend)
+---------------------
+```bash
+cd server
+npm install
+npm start
+# Server: http://localhost:5173
+```
+
+Styles and UI
+-------------
+- assets/css/styles.css — marketing site styles and shared utilities
+- assets/css/app.css — in-app styles (tabs, cards, widgets)
+- assets/css/app-page.css — page and component-level polish
+- Utility-like class names are defined in the CSS (no Tailwind build step)
+
+Assets
+------
+- SVG/logo: assets/img/logo-wallet.svg, assets/img/chainstack-logo-wrapper.svg
+- Illustrations: assets/img/learning-hero-cute.svg and others
+- Favicons: assets/img/favicons/
+
+Data files (JSON)
+-----------------
+- data/demo.json — marketing/demo KPIs for charts
+- data/etfs.json — ETF info used by app modules
+- data/fees.json — fee schedules used by DIY trading
+- data/demo-portfolios.json — sample recommended portfolios
+- data/learning.json — learning content for app
+- data/market.json (if present) — market seed/snapshot
+- data/impact.json — premium impact demo data
+
+Hosting requirements
+--------------------
+- Any static host (GitHub Pages, Netlify, Vercel, S3/CloudFront) or local file system
+- If loading JSON via fetch, serve over HTTP(S) using a static server
+ - If using the backend, run it separately (default http://localhost:5173); CORS is enabled for local development.
+
+Browser support (tested manually)
+---------------------------------
+- Chrome (latest), Safari (latest on macOS), Edge (latest)
+- Mobile Safari (latest iOS) — responsive layouts validated
+
+How to update dependencies
+--------------------------
+- Chart.js: update the CDN URL version if needed; ensure charts still render
+- React/ReactDOM: keep UMD builds in sync (same major/minor)
+- No lockfiles or package.json are present — updates are manual via HTML includes
+
+Notes
+-----
+- Primarily a client-side demo. An optional backend is available under `server/`.
+- To reset demo data, clear site data (localStorage) in the browser.

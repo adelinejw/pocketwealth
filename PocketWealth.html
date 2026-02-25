@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PocketWealth — Invest Big, Starting Small</title>
+  <meta name="description" content="PocketWealth — robo-advisory and fractional investing in Malaysia. Start investing from RM10 with ESG & Shariah options." />
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <!-- Use brand SVG as favicon (browsers that support SVG favicons) -->
+  <link rel="icon" href="assets/img/logo-wallet.svg" type="image/svg+xml">
+  <!-- Safari pinned/tab mask (simple SVG used as mask; Safari uses monochrome mask) -->
+  <link rel="mask-icon" href="assets/img/logo-wallet.svg" color="#0A84FF">
+  <meta name="theme-color" content="#0A84FF">
+</head>
+<body>
+  <header id="site-header" class="site-header">
+    <div class="container header-inner">
+      <a id="brandLogo" class="brand" href="#">
+        <img src="assets/img/logo-wallet.svg" alt="PocketWealth logo" class="logo" width="48" height="48">
+        <span class="brand-text">PocketWealth</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How it Works</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#blockchain">Blockchain</a></li>
+          <li><a href="#why">Why Us</a></li>
+          <li><a href="#premium">Premium</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <button id="btnSignInTop" class="btn btn-secondary">Sign In</button>
+        <button id="ctaGetStarted" class="btn btn-primary">Get Started</button>
+      </div>
+      <button class="mobile-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- MARKETING SITE -->
+    <div id="marketing-site">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 class="gradient-text">Invest Big, Starting Small.</h1>
+          <p class="lead">PocketWealth lets you start investing with just RM 10. Access fractional stocks, ETFs, and personalized ESG &amp; Shariah-compliant portfolios. Learn as you grow with gamified tools, round-ups, and transparent flat fees — designed for students, gig workers, and first-time investors.</p>
+          <div class="hero-ctas">
+            <button class="btn btn-cta" id="startJourney">🚀 Start Your Journey</button>
+            <button class="btn btn-secondary" id="openPremium2">Why Premium?</button>
+          </div>
+
+          <div class="hero-trust" aria-label="Trust badges">
+            <span class="trust-dot" aria-hidden="true"></span><span>Bank-grade security</span>
+            <span class="divider" aria-hidden="true"></span><span>SC DIM-aligned practices</span>
+            <span class="divider" aria-hidden="true"></span><span>Transparent pricing</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="wallet-wrap" id="walletWrap" aria-hidden="true">
+            <img src="assets/img/logo-wallet.svg" alt="Wallet mascot" class="wallet-mascot">
+            <div class="chips">
+              <div class="chip">RM10 minimum</div>
+              <div class="chip">ESG/Shariah filters</div>
+              <div class="chip">Blockchain Transparency</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- rest of marketing sections remain unchanged -->
+    </div>
+
+    <!-- APP SHELL (shown after sign-in) -->
+    <section id="app-shell" class="app-shell hidden" aria-label="PocketWealth App">
+      <div class="app-toolbar" role="navigation" aria-label="App toolbar">
+        <div class="left">
+          <img src="assets/img/logo-wallet.svg" alt="PocketWealth" class="app-logo">
+          <span class="app-title">PocketWealth App</span>
+        </div>
+        <div class="right">
+          <span id="userEmail" class="user-email"></span>
+          <button id="btnSignOut" class="btn-secondary">Sign out</button>
+        </div>
+      </div>
+
+      <div class="app-content container">
+        <div class="app-grid">
+          <aside class="app-sidebar card">
+            <h4>Your Portfolio</h4>
+            <div id="portfolioSummary">
+              <p class="muted">No positions yet — complete onboarding to get a model portfolio.</p>
+            </div>
+            <div class="muted small">Fees: <span id="userFee">0.35%</span></div>
+          </aside>
+          <div class="app-content-main">
+            <div class="card">
+              <h3>Portfolio Allocation</h3>
+              <canvas id="appAllocation"></canvas>
+            </div>
+            <div class="card">
+              <h3>Projected Performance (simulated)</h3>
+              <canvas id="appPerformance"></canvas>
+            </div>
+            <div class="card">
+              <h3>Onboarding / Rebalance Simulator</h3>
+              <div id="onboardingFlow"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+    <section id="features" class="container section">
+      <h2>Features</h2>
+      <div class="cards-grid">
+        <!-- 8 feature cards -->
+        <article class="feature card">
+          <div class="feature-icon">🔰</div>
+          <h4>Start with RM 10</h4>
+          <p>Accessible micro-investing designed for everyone, especially students and gig workers.</p>
+        </article>
+        <article class="feature card">
+          <div class="feature-icon">🔁</div>
+          <h4>Fractional Investing</h4>
+          <p>Buy fractional shares of top stocks and ETFs to diversify easily.</p>
+        </article>
+        <article class="feature card">
+          <div class="feature-icon">🕌</div>
+          <h4>Shariah & ESG Options</h4>
+          <p>Invest ethically with portfolios that align with your values and culture.</p>
+        </article>
+        <article class="feature card">
+          <div class="feature-icon">🎮</div>
+          <h4>Gamified Tools</h4>
+          <p>Track goals, earn rewards, and learn investing the fun way.</p>
+        </article>
+        <article class="feature card">
+          <div class="feature-icon">🔒</div>
+          <h4>Secured Platform</h4>
+          <p>Bank-grade encryption plus blockchain verification keep funds and data safe.</p>
+        </article>
+        <article class="feature card">
+          <div class="feature-icon">📚</div>
+          <h4>Educational Support</h4>
+          <p>Webinars, guides, and a 24/7 chatbot for beginner confidence.</p>
+        </article>
+        <article class="feature card">
+          <div class="feature-icon">🧾</div>
+          <h4>Blockchain Security</h4>
+          <p>Key actions are recorded to a tamper-evident ledger for auditability.</p>
+        </article>
+        <article class="feature card">
+          <div class="feature-icon">🤖</div>
+          <h4>Robo-Advisory</h4>
+          <p>Automated, risk-based portfolios with on-chain-logged rebalancing.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="how" class="container section">
+      <h2>How it Works</h2>
+      <div class="timeline-grid">
+        <div class="step card"><div class="step-icon">📝</div><h4>Sign Up</h4><p>Create your free account in minutes.</p></div>
+        <div class="step card"><div class="step-icon">💸</div><h4>Invest Small</h4><p>Start from RM 10, no big commitments.</p></div>
+        <div class="step card"><div class="step-icon">📈</div><h4>Grow Wealth</h4><p>Smart automation diversifies and rebalances for you.</p></div>
+        <div class="step card"><div class="step-icon">📱</div><h4>Access Anytime</h4><p>Deposit or withdraw whenever you need.</p></div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="container section">
+      <h2>Robo-Advisory Portfolios</h2>
+      <div class="cards-grid">
+        <article class="card"><div class="feature-icon">🛡️</div><h4>Conservative Portfolio</h4><p>Focused on stability and capital preservation with balanced ETFs and low-risk assets.</p></article>
+        <article class="card"><div class="feature-icon">⚖️</div><h4>Balanced Portfolio</h4><p>A mix of growth and income with ESG/Shariah options.</p></article>
+        <article class="card"><div class="feature-icon">🚀</div><h4>Growth Portfolio</h4><p>Long-term growth via fractional stocks and dynamic allocations.</p></article>
+      </div>
+      <p class="muted small">Portfolios rebalance automatically; key decisions are logged on blockchain for transparency.</p>
+    </section>
+
+    <section id="blockchain" class="container section">
+      <h2>Blockchain Trust Layer</h2>
+      <!-- Partnership block: white rectangle placed between the heading and the feature cards -->
+      <article class="card wide partnership">
+        <div class="partnership-grid">
+          <div class="partnership-content">
+            <h3 class="partnership-main">PocketWealth × Chainstack</h3>
+            <h4 class="partnership-sub">Powering Transparent Blockchain Transactions</h4>
+            <p>PocketWealth partners with Chainstack, a global leader in blockchain infrastructure, to bring secure and transparent Web3 technology into digital investing. Through Chainstack’s scalable multi-chain nodes and high-performance APIs, every PocketWealth transaction is verifiable and tamper-proof — strengthening user trust and transparency across our platform.</p>
+          </div>
+          <div class="partnership-media" aria-hidden="true">
+            <img src="assets/img/chainstack-logo-wrapper.svg" alt="Chainstack logo">
+          </div>
+        </div>
+      </article>
+      <div class="cards-grid cards-grid--spaced">
+        <article class="card"><div class="feature-icon">🔏</div><h4>Immutable Audit Trail</h4><p>Deposits, fees, and rebalances are recorded to a tamper-evident ledger.</p></article>
+        <article class="card"><div class="feature-icon">📸</div><h4>Proof-of-Holdings</h4><p>Periodic snapshots verify assets are held as stated.</p></article>
+        <article class="card"><div class="feature-icon">🧾</div><h4>On-Chain Fee Receipts</h4><p>Transparent, itemised fee records so you always know what you paid and why.</p></article>
+        <article class="card"><div class="feature-icon">🔐</div><h4>Privacy by Design</h4><p>Personal data stays encrypted off-chain; only necessary proofs are on-chain.</p></article>
+      </div>
+    </section>
+
+    <section id="why" class="container section">
+      <h2>Why Choose Us</h2>
+      <div class="cards-grid">
+        <article class="card"><div class="feature-icon">🏛️</div><h4>Trusted & Secure</h4><p>SC DIM-aligned practices and strong encryption.</p></article>
+        <article class="card"><div class="feature-icon">🤝</div><h4>Inclusive Finance</h4><p>Tools built for youth, B40, and values-driven investors.</p></article>
+        <article class="card"><div class="feature-icon">💸</div><h4>Low Fees</h4><p>Start investing from only RM10.</p></article>
+        <article class="card"><div class="feature-icon">🌏</div><h4>Global Vision</h4><p>Built in Malaysia, scalable to ASEAN markets.</p></article>
+      </div>
+    </section>
+
+    <section id="premium" class="container section premium-section">
+      <h2>PocketWealth Premium Subscriptions</h2>
+      <p class="lead">Choose a plan that fits your journey. Start with Starter for affordable robo investing, or unlock everything with Pro.</p>
+
+  <div class="cards-grid two-col premium-two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+        <!-- Starter card -->
+        <article class="card" style="position:relative;min-height:220px">
+          <div style="display:flex;justify-content:space-between;align-items:start;gap:12px">
+            <div>
+              <h3 style="margin-bottom:4px">PocketWealth Starter</h3>
+              <div class="muted small" style="margin-bottom:6px">RM10/month</div>
+            </div>
+            <button class="btn btn-success" id="subscribeStarter" style="white-space:nowrap">👉 Click here to subscribe</button>
+          </div>
+          <ul class="bullets" style="margin-top:10px">
+            <li>Robo-Advisory access with quick risk quiz</li>
+            <li>Personalised investment recommendations</li>
+            <li>Basic insights and simple tracking</li>
+            <li>Affordable way to get started</li>
+          </ul>
+        </article>
+
+        <!-- Pro card -->
+        <article class="card pro" style="position:relative;min-height:220px">
+          <div class="pro-badge" aria-label="Recommended plan">Recommended</div>
+          <div style="display:flex;justify-content:space-between;align-items:start;gap:12px">
+            <div>
+              <h3 style="margin-bottom:4px">PocketWealth Pro</h3>
+              <div class="muted small" style="margin-bottom:6px">RM20/month</div>
+            </div>
+            <button class="btn btn-success" id="subscribePro" style="white-space:nowrap">👉 Click here to subscribe</button>
+          </div>
+          <ul class="bullets" style="margin-top:10px">
+            <li>Everything in Starter</li>
+            <li>Advanced ESG scoring and impact reports</li>
+            <li>Exclusive Shariah options and screens</li>
+            <li>Priority support, education, and masterclasses</li>
+          </ul>
+        </article>
+      </div>
+
+      <p class="muted small" style="margin-top:10px">No long-term lock-in. Cancel anytime.</p>
+    </section>
+
+    <!-- Premium modal -->
+      <!-- Signup Modal -->
+      <div id="modalOverlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal" role="document">
+        <h3>Create your PocketWealth account</h3>
+        <p class="muted">Join PocketWealth and start investing from RM10.</p>
+        <form id="signupForm" class="modal-form" onsubmit="return false;">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" required>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" required>
+          <div class="modal-actions">
+            <button class="btn btn-success" id="createAccount">Create account</button>
+            <button class="btn btn-secondary" id="closeModal">Exit</button>
+          </div>
+          <div id="signupError" class="muted small" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginOverlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal" role="document">
+        <h3>Sign in to PocketWealth</h3>
+        <p class="muted">Welcome back — enter your email and password to continue.</p>
+        <form id="loginForm" class="modal-form" onsubmit="return false;">
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" name="loginEmail" type="email" required>
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" name="loginPassword" type="password" required>
+          <div class="modal-actions">
+            <button class="btn btn-primary" id="loginButton">Sign in</button>
+            <button class="btn btn-secondary" id="closeLogin">Cancel</button>
+          </div>
+          <div id="loginError" class="muted small" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <section id="faq" class="container section faq-section">
+      <h2>FAQ</h2>
+      <p class="lead muted">Quick answers to the most common questions — still need help? Contact us at <strong>admin@pocketwealth.com.my</strong>.</p>
+      <div class="faq-list">
+        <details>
+          <summary><span class="faq-q">Is there a minimum to start investing?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>Yes — only RM10.</p>
+        </details>
+        <details>
+          <summary><span class="faq-q">What are ESG and Shariah-Compliant Investments?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>ESG (Environmental, Social, and Governance) investments consider these three factors in the investment decision-making process. Shariah-compliant investments adhere to Islamic law, avoiding businesses involved in alcohol, gambling, and other non-compliant activities.</p>
+        </details>
+        <details>
+          <summary><span class="faq-q">What are the fees?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>A minimal fee of 0.7% per transaction, applied each time a user sells through the platform.</p>
+        </details>
+        <details>
+          <summary><span class="faq-q">How do fractional shares work?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>Your order buys a portion of a share based on ringgit amount, with the same price exposure — ideal for diversification on small budgets.</p>
+        </details>
+        <details>
+          <summary><span class="faq-q">Is my money safe?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>We use bank-grade encryption, reputable custody partners, and blockchain logging for transparency. Personal data is stored securely and only required information is shared with partners.</p>
+        </details>
+        <details>
+          <summary><span class="faq-q">Do I need crypto?</span><span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>No — blockchain is used behind the scenes for audit and trust, not for speculation. You don't need to buy or hold cryptocurrencies to use PocketWealth.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta-strip">
+      <div class="container cta-inner">
+        <div>
+          <h3>Get Started Today</h3>
+          <p class="muted">Enter your email below and begin your journey with PocketWealth.</p>
+        </div>
+        <form class="join-form" onsubmit="return false;">
+          <input type="email" placeholder="Enter your email" aria-label="Email for signup">
+          <button class="btn btn-cta">Join Now</button>
+        </form>
+      </div>
+      <p class="legal muted small">By signing up, you agree to our terms and conditions.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="assets/img/logo-wallet.svg" alt="PocketWealth" width="36">
+        <p class="muted small">PocketWealth — Built in Malaysia. © <span id="year"></span></p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="contact muted small" aria-label="Contact information">
+        <strong>Contact Us</strong><br>
+        ✉️ admin@pocketwealth.com.my<br>
+        📸 PocketWealth<br>
+        📞 08 - 8888 8888
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>

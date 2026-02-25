@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PocketWealth — App</title>
+  <link rel="stylesheet" href="assets/css/app-page.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="icon" href="assets/img/logo-wallet.svg">
+  <!-- Tailwind Play CDN for utility classes (dev/demo only) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React UMD -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <main class="app-root app-container" role="main">
+    <header class="app-header">
+      <div class="left">
+        <img src="assets/img/logo-wallet.svg" alt="PocketWealth logo" class="brand" />
+        <span class="brand-text">PocketWealth</span>
+      </div>
+      <div class="right">
+        <div id="userStatus" class="user-status" aria-live="polite" style="display:none"></div>
+        <button id="btnTopup" class="btn" style="margin-left:8px;">Top-up</button>
+        <button id="btnSignOutApp" class="btn btn-ghost">Sign Out</button>
+      </div>
+    </header>
+
+    <!-- Tab bar -->
+    <nav class="app-tabs" role="tablist" aria-label="Main tabs">
+      <button data-tab="dashboard" class="tab" role="tab">Dashboard</button>
+      <button data-tab="invest" class="tab" role="tab">Invest</button>
+  <button data-tab="market" class="tab" role="tab">Market</button>
+        <button data-tab="robo" class="tab" role="tab">Robo-Advisory</button>
+    <button data-tab="premium" class="tab" role="tab">Premium</button>
+    <button data-tab="learning" class="tab" role="tab">Learning</button>
+  <button data-tab="statement" class="tab" role="tab">Statement</button>
+  <button data-tab="game" class="tab" role="tab">Game</button>
+      <button data-tab="admin" class="tab" role="tab" id="tabAdmin" style="display:none">Admin</button>
+    </nav>
+
+    <section id="tabContent" class="app-content" aria-live="polite">
+      <!-- Dashboard -->
+      <section data-content="dashboard" class="tab-panel">
+        <h1 id="welcomeGreeting">Welcome to PocketWealth</h1>
+        <p class="muted">Hello, <strong id="appUser">(not signed in)</strong></p>
+        <div class="kpi-grid">
+          <div class="card kpi-card">
+            <h4>Cash Balance (MYR)</h4>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div id="cashBalance" class="big">RM 0.00</div>
+              <button id="btnTopupQuick" class="btn btn-ghost" aria-label="Top-up">+</button>
+            </div>
+          </div>
+          <div class="card kpi-card">
+            <h4>Total Portfolio Value</h4>
+            <div id="portfolioValue" class="big">RM 0.00</div>
+          </div>
+          <div class="card kpi-card">
+            <h4>Unrealised P&L</h4>
+            <div id="unrealisedPnl" class="big">RM 0.00 (0.00%)</div>
+          </div>
+          <div class="card kpi-card">
+            <h4>Premium Status</h4>
+            <div id="premiumStatus" class="big">Inactive</div>
+          </div>
+        </div>
+
+        <div class="two-col-grid" style="margin-top:12px">
+          <div class="card" id="portfolioCard">
+            <h4>Portfolio Holdings</h4>
+            <div id="portfolioContent">Loading holdings...</div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="card">
+            <h4>Allocation</h4>
+            <canvas id="donutAllocation"></canvas>
+          </div>
+          <div class="card">
+            <h4>Performance (simulated)</h4>
+            <canvas id="perfLine"></canvas>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <label>Deposit (MYR): <input id="depositAmount" type="number" min="1" step="1"></label>
+          <button id="btnDeposit" class="btn">Deposit</button>
+          <label>Withdraw (MYR): <input id="withdrawAmount" type="number" min="1" step="1"></label>
+          <button id="btnWithdraw" class="btn">Withdraw</button>
+        </div>
+      </section>
+
+      <!-- Invest landing -->
+      <section data-content="invest" class="tab-panel hidden">
+        <h2>Invest</h2>
+        <p class="muted">Explore simulated markets to practice investing. Each market has its own risk and volatility level — start small, learn, and grow your confidence with RM10 minimum investments.</p>
+        <div id="investList" class="grid cards" style="margin-top:12px"></div>
+        <!-- Shariah Market section (only visible/active for Pro) -->
+        <div id="shariahSection" class="card" style="margin-top:18px;padding:16px;">
+          <h3 style="margin-top:0">Shariah Market 🕌</h3>
+          <p id="shariahIntro" class="muted small">Curated Shariah-compliant stocks — available to PocketWealth Pro subscribers.</p>
+          <div id="shariahList" class="grid cards" style="margin-top:12px"></div>
+        </div>
+      </section>
+
+      <!-- Market (live simulated market) -->
+      <section data-content="market" class="tab-panel hidden">
+        <h2>Market — Simulated Live Prices</h2>
+        <div class="market-controls card" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div style="display:flex;gap:8px;align-items:center">
+            <label>Type: <select id="marketTypeFilter"><option value="">All</option></select></label>
+          </div>
+        </div>
+
+        <div class="market-wrap" style="margin-top:12px">
+          <aside class="market-watch card" id="marketWatchWrap">
+            <h4>Watchlist</h4>
+            <table id="marketWatch" class="market-table" aria-label="Market watchlist">
+              <thead>
+                <tr>
+                  <th style="text-align:left">Symbol</th>
+                  <th style="text-align:left">Last</th>
+                  <th style="text-align:left">24h</th>
+                  <th style="text-align:left">Vol</th>
+                  <th aria-hidden="true"></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </aside>
+          <section class="market-detail card" id="marketDetail">
+            <h4 id="detailTitle">Select a symbol</h4>
+              <div style="display:flex;gap:12px;align-items:center">
+                <div id="detailPrice" class="big">-</div>
+                <div id="priceMoving" class="muted small" aria-hidden="true">&nbsp;</div>
+              </div>
+            <canvas id="marketChart" aria-label="Symbol price chart" style="max-height:360px"></canvas>
+            <div id="detailPosition" class="card" style="margin-top:8px"></div>
+            <div id="orderTicket" class="card" style="margin-top:8px">Order ticket will appear here when a symbol is selected.</div>
+            <div id="insightsBox" class="card hidden" style="margin-top:8px"></div>
+            <div id="adminControls" class="card hidden" style="margin-top:8px"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Fractional section removed -->
+
+      <!-- Robo -->
+      <section data-content="robo" class="tab-panel hidden">
+        <h2>Robo-Advisory</h2>
+        <div id="roboLocked" class="card">Robo-Advisory is available for Premium Robo subscribers (RM10/mo). Please subscribe in the Premium tab.</div>
+        <div id="roboContent" class="hidden">
+          <div style="margin-top:12px">
+            <button id="btnRoboQuiz" class="btn btn-ghost">Take Risk Quiz</button>
+          </div>
+          <!-- Quiz summary inserted here after user completes quiz -->
+          <div id="roboQuizSummary" class="card hidden" style="margin-top:14px; width:100%; max-width:100%; margin-left:auto; margin-right:auto;">
+            <h4>Your risk profile</h4>
+            <div id="roboSummaryContent" style="display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center">
+            <div id="roboSummaryText" style="text-align:center">
+                <!-- score and label --></div>
+            <div style="width:180px;max-width:100%;margin:0 auto"><canvas id="roboMiniChart" width="180" height="160"></canvas></div>
+            </div>
+            <h4 id="roboSummaryRecsTitle" style="margin-top:10px;margin-bottom:6px">Investment recommendations</h4>
+            <div id="roboSummaryRecs" style="margin-top:10px"></div>
+          </div>
+          <!-- ESG scoring (Pro-only) -->
+          <div id="roboEsgCard" class="card" style="margin-top:14px; width:100%; max-width:100%; margin-left:auto; margin-right:auto;">
+            <h4>ESG scoring</h4>
+            <div id="esgLocked" class="muted" style="padding:8px;border:1px dashed #c7cdd6;border-radius:8px;background:#f3f6fb">PocketWealth Pro Users ONLY</div>
+            <div id="esgContent" class="hidden">
+              <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+                <div style="flex:1;min-width:220px">
+                  <div id="esgOverallText" style="font-size:28px;font-weight:700">Overall ESG: - / 100</div>
+                  <div id="esgTierText" class="muted small"></div>
+                </div>
+                <div style="flex:1;min-width:220px"><canvas id="esgGauge" style="max-height:200px"></canvas></div>
+                <div style="flex:1;min-width:220px"><canvas id="esgBars" style="max-height:200px"></canvas></div>
+                <div style="flex:1;min-width:220px"><canvas id="esgRadar" style="max-height:220px"></canvas></div>
+              </div>
+              <div id="esgExplain" class="muted" style="margin-top:10px"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIY Trading section removed -->
+
+      <!-- Premium -->
+      <section data-content="premium" class="tab-panel hidden">
+        <h2>Choose Your Subscription</h2>
+        <div class="premium-two-col" style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-bottom:24px;">
+          <div class="card" style="flex:1;min-width:260px;max-width:340px;">
+            <h3 style="margin-bottom:8px;color:#0b66ff">PocketWealth Starter</h3>
+            <div style="font-size:18px;font-weight:700;margin-bottom:8px">RM10/month</div>
+            <ul style="margin-bottom:12px;padding-left:18px;text-align:left">
+              <li>Access PocketWealth Starter tab</li>
+              <li>Automated portfolio management</li>
+              <li>Risk-based investment recommendations</li>
+              <li>Simple, affordable investing</li>
+            </ul>
+            <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-top:8px;">
+              <button id="btnActivatePremiumRobo" class="btn" aria-label="Activate Premium Robo">Activate PocketWealth Starter</button>
+              <button id="btnCancelStarter" class="btn hidden" aria-label="Unsubscribe Starter">Unsubscribe</button>
+            </div>
+          </div>
+          <div class="card pro" style="flex:1;min-width:260px;max-width:340px;">
+            <div class="pro-badge">Recommended</div>
+            <h3 style="margin-bottom:8px;color:#0066cc">PocketWealth Pro</h3>
+            <div style="font-size:18px;font-weight:700;margin-bottom:8px">RM20/month</div>
+            <ul style="margin-bottom:12px;padding-left:18px;text-align:left">
+              <li>All PocketWealth Starter features</li>
+              <li>Advanced ESG scoring</li>
+              <li>Shariah screens</li>
+              <li>Priority support</li>
+              <li>Exclusive investment options</li>
+            </ul>
+            <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-top:8px;">
+              <button id="btnActivatePremiumFull" class="btn" aria-label="Activate PocketWealth Pro">Activate PocketWealth Pro</button>
+              <button id="btnCancelPro" class="btn hidden" aria-label="Unsubscribe Pro">Unsubscribe</button>
+            </div>
+          </div>
+        </div>
+        <div id="premiumSections" class="premium-sections">
+          <div id="premiumUnlocked" class="premium-unlocked">
+            <div id="roboUnlock" class="card hidden">Robo-Advisory unlocked for Premium Robo subscribers.</div>
+            <!-- Impact Reports removed: not available for Pro -->
+            <div id="esgScoring" class="card hidden">
+              <h4 style="margin-top:0">ESG Scoring & Dashboards</h4>
+              <p class="muted">Get portfolio-level ESG scores, pillar breakdowns (Environmental / Social / Governance), and visual dashboards to track progress over time.</p>
+            </div>
+            <div id="shariahOptions" class="card hidden">
+              <h4 style="margin-top:0">Shariah-Certified Options</h4>
+              <p class="muted">Access curated Shariah-compliant markets and filters so you can build portfolios that follow Islamic finance principles.</p>
+            </div>
+            <div id="premiumSupport" class="card hidden">
+              <h4 style="margin-top:0">Priority Support & Masterclasses</h4>
+              <p class="muted">Enjoy priority customer support, invites to exclusive masterclasses, and early access to new features for PocketWealth Pro subscribers.</p>
+            </div>
+          </div>
+          <div id="premiumUpsell" class="card premium-upsell">
+            <h4>Upgrade for More Features</h4>
+            <p>Subscribe for RM10/month to unlock Robo-Advisory, or RM20/month for PocketWealth Pro with all premium features including impact reports, ESG scoring, exclusive Shariah options and priority support.</p>
+            <p><em>Benefits will appear here after you activate a subscription.</em></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Learning -->
+      <section data-content="learning" class="tab-panel hidden">
+        <div class="learning-hero card">
+          <div class="learning-hero-content">
+            <h1 class="gradient-title">The building blocks of your financial journey</h1>
+            <p class="muted">Everything you need to know to start investing smart — from the basics to advanced strategies.</p>
+            <div style="margin-top:12px"><button id="btnStartLearning" class="btn">Start Learning</button></div>
+          </div>
+          <div class="learning-hero-illustration" aria-hidden="true">
+            <img src="assets/img/learning-hero-cute.svg" alt="Cute learning illustration — smiling wallet, coins, and growth plant" class="learning-hero-img">
+          </div>
+        </div>
+
+        <div class="learning-content">
+          <section id="learn-investing101" class="learning-section card">
+            <h2>Investing</h2>
+            <p class="muted">A good place to start. Get the lowdown before you dive in.</p>
+            <div class="learning-cards">
+              <div class="learn-card" data-role="expand">
+                <h4>What is an Investment?</h4>
+                <p class="muted">An investment is when you put money into assets like stocks or funds to grow your wealth over time.</p>
+              </div>
+              <div class="learn-card" data-role="expand">
+                <h4>What is a Stock?</h4>
+                <p class="muted">A stock represents a share of ownership in a company — giving you potential returns through price gains or dividends.</p>
+              </div>
+              <div class="learn-card" data-role="expand">
+                <h4>What is the Stock Market?</h4>
+                <p class="muted">A marketplace where investors buy and sell shares, ETFs, and other securities.</p>
+              </div>
+            </div>
+            <div class="learning-faqs">
+              <details><summary>Why should I invest?</summary><p class="muted">Investing helps your money grow over time and can outpace inflation.</p></details>
+              <details><summary>How to start investing?</summary><p class="muted">Start with small, regular contributions and diversify across assets.</p></details>
+              <details><summary>What makes a good investment?</summary><p class="muted">Strong fundamentals, sustainable business model, and reasonable valuation.</p></details>
+            </div>
+            <div style="margin-top:12px"><button class="btn btn-ghost see-more" data-anchor="library">See more: Investing Articles</button></div>
+          </section>
+
+          <section id="learn-options" class="learning-section card">
+            <h2>Options Trading Essentials</h2>
+            <p class="muted">Curious about options? Learn the ins and outs before you trade.</p>
+            <div class="learning-cards">
+              <div class="learn-card"><h4>Getting started with options</h4><p class="muted">Understand contracts, expiries and payoff profiles.</p></div>
+              <div class="learn-card"><h4>A primer on calls & puts</h4><p class="muted">Calls give the right to buy; puts give the right to sell.</p></div>
+              <div class="learn-card"><h4>Managing risks in options trading</h4><p class="muted">Position sizing and hedging matter — options can amplify both gains and losses.</p></div>
+            </div>
+            <div style="margin-top:12px"><button class="btn btn-ghost see-more" data-anchor="library">See Options Articles</button></div>
+          </section>
+
+          <section id="learn-futures" class="learning-section card">
+            <h2>Futures Fundamentals</h2>
+            <p class="muted">New to futures? We’ve got you covered.</p>
+            <div class="learning-cards">
+              <div class="learn-card"><h4>Introduction to futures</h4><p class="muted">Futures are agreements to buy/sell an asset at a future date.</p></div>
+              <div class="learn-card"><h4>What’s a futures contract?</h4><p class="muted">A standardized contract traded on exchanges with margin requirements.</p></div>
+              <div class="learn-card"><h4>Trading futures</h4><p class="muted">Leverage, rollovers, and settlement — know what you're entering.</p></div>
+            </div>
+            <div class="learning-faqs">
+              <details><summary>What is margin in futures?</summary><p class="muted">Margin is collateral required to hold a futures position.</p></details>
+              <details><summary>How do futures differ from stocks?</summary><p class="muted">Futures are contracts; stocks are ownership in companies.</p></details>
+            </div>
+            <div style="margin-top:12px"><button class="btn btn-ghost see-more" data-anchor="library">See Futures Articles</button></div>
+          </section>
+
+          <section id="library" class="learning-section card">
+            <h2>The Library</h2>
+            <p class="muted">There’s always more to learn when it comes to investing. Explore our entire knowledge base.</p>
+            <div class="learning-cards horizontal">
+              <div class="learn-card horizontal"><h4>What is a Portfolio?</h4><p class="muted">A portfolio is a collection of investments held by an investor.</p></div>
+              <div class="learn-card horizontal"><h4>What is an ETF?</h4><p class="muted">An ETF is a fund that tracks an index or basket of assets.</p></div>
+              <div class="learn-card horizontal"><h4>What is a Dividend?</h4><p class="muted">A dividend is a portion of a company’s earnings distributed to shareholders.</p></div>
+            </div>
+            <div style="margin-top:12px"><button class="btn see-library" data-action="see-library">See Library</button></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Statement (clean reintroduced version) -->
+      <section data-content="statement" class="tab-panel hidden">
+        <h2 style="margin-top:0">Statement</h2>
+        <div class="card" id="statementFilters" style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end">
+          <label style="display:flex;flex-direction:column;font-size:12px">Month
+            <select id="stMonth" style="padding:6px 10px;border-radius:8px;border:1px solid rgba(11,22,34,0.12)"></select>
+          </label>
+          <label style="display:flex;flex-direction:column;font-size:12px">Year
+            <select id="stYear" style="padding:6px 10px;border-radius:8px;border:1px solid rgba(11,22,34,0.12)"></select>
+          </label>
+          <label style="display:flex;flex-direction:column;font-size:12px;min-width:180px">Type
+            <select id="stType" style="padding:6px 10px;border-radius:8px;border:1px solid rgba(11,22,34,0.12)"></select>
+          </label>
+          <label style="display:flex;flex-direction:column;font-size:12px;flex:1;min-width:200px">Search
+            <input id="stSearch" type="search" placeholder="symbol, note, type" style="padding:6px 10px;border-radius:8px;border:1px solid rgba(11,22,34,0.12)" />
+          </label>
+        </div>
+        <div class="card" id="statementSummaryBlock" style="margin-top:12px;display:flex;gap:24px;flex-wrap:wrap"></div>
+        <div class="card" style="margin-top:12px;overflow:auto" id="statementTableWrap">
+          <table id="statementTable" style="width:100%;border-collapse:collapse;min-width:760px;text-align:center">
+            <thead>
+              <tr>
+                <th style="padding:8px 10px;font-weight:600">Date</th>
+                <th style="padding:8px 10px;font-weight:600">Time</th>
+                <th style="padding:8px 10px;font-weight:600">Type</th>
+                <th style="padding:8px 10px;font-weight:600">Symbol</th>
+                <th style="padding:8px 10px;font-weight:600">Qty</th>
+                <th style="padding:8px 10px;font-weight:600">Price / Unit</th>
+                <th style="padding:8px 10px;font-weight:600">Amount (+/-)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+
+      <!-- Game (paper trading) scaffold -->
+      <section data-content="game" class="tab-panel hidden">
+        <div id="gameRoot" class="game-root">
+          <div id="paperTradingGameRoot"></div>
+        </div>
+      </section>
+
+      <!-- Admin -->
+      <section data-content="admin" class="tab-panel hidden">
+        <h2>Admin Panel</h2>
+        <form id="giftForm">
+          <label>Email to gift: <input id="giftEmail" type="email" required></label>
+          <label>Amount (MYR): <input id="giftAmount" type="number" min="1" required></label>
+          <button class="btn" type="submit">Gift Funds</button>
+        </form>
+        <div id="adminSummary" class="card"></div>
+      </section>
+    </section>
+
+    <footer class="app-footer muted small">© <span id="year">2025</span> PocketWealth</footer>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/app-core.js" defer></script>
+  <script src="assets/js/paper-trading-game.js" defer></script>
+  <!-- Trade confirmation modal -->
+  <div id="tradeModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="tradeModalTitle">
+    <div class="modal-card card" role="document" style="max-width:520px;margin:60px auto;padding:16px;">
+      <h3 id="tradeModalTitle">Confirm Trade</h3>
+      <div id="tradeSnapshot" class="muted small">Snapshot: <span id="snapshotPrice">-</span> <span id="snapshotTime"></span></div>
+      <div id="tradeBody" style="margin-top:12px">
+        <label>Quantity: <input id="tradeQty" type="number" step="0.000001" min="0.000001" aria-label="Quantity (units)"></label>
+        <div id="tradeTotal" class="muted small" style="margin-top:8px"></div>
+        <div id="tradeWarning" class="muted small" style="color:#c92a2a;margin-top:8px;display:none"></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button id="tradeCancel" class="btn btn-ghost">Cancel</button>
+        <button id="tradeConfirm" class="btn">Confirm</button>
+      </div>
+    </div>
+  </div>
+  <!-- Top-up modal -->
+  <div id="topupModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="topupModalTitle">
+    <div class="modal-card card" role="document" style="max-width:480px;margin:60px auto;padding:16px;">
+      <h3 id="topupModalTitle">Top-up Amount</h3>
+      <p class="muted small">Add funds to your PocketWealth cash balance.</p>
+      <div id="topupBody" style="margin-top:12px">
+        <label>Amount (MYR): <input id="topupAmount" type="number" inputmode="decimal" step="0.01" min="0.01" aria-label="Top-up amount"></label>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn btn-ghost topupQuick" data-amt="10">RM10</button>
+          <button class="btn btn-ghost topupQuick" data-amt="50">RM50</button>
+          <button class="btn btn-ghost topupQuick" data-amt="100">RM100</button>
+        </div>
+        <div style="margin-top:12px" class="muted small">Balance now: <span id="balanceNow">RM 0.00</span></div>
+        <div class="muted small">Balance after: <strong id="balanceAfter">RM 0.00</strong></div>
+        <div id="topupError" class="muted small" style="color:#c92a2a;margin-top:8px;display:none"></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button id="topupCancel" class="btn btn-ghost">Cancel</button>
+        <button id="topupConfirm" class="btn">Confirm Top-up</button>
+      </div>
+    </div>
+  </div>
+  <!-- Robo Risk Quiz Modal -->
+  <div id="roboQuizModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="roboQuizTitle">
+  <div class="modal-card card" role="document" style="max-width:680px;margin:40px auto;padding:20px;">
+  <h3 id="roboQuizTitle" style="text-align:center">Quick Risk Quiz</h3>
+      <div id="roboQuizBody" style="margin-top:12px">
+        <!-- quiz questions injected by JS -->
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button id="roboQuizCancel" class="btn btn-ghost">Cancel</button>
+        <button id="roboQuizSubmit" class="btn">Get Recommendation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Robo Results Modal -->
+  <div id="roboResultsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="roboResultsTitle">
+    <div class="modal-card card" role="document" style="max-width:760px;margin:40px auto;padding:18px;">
+      <h3 id="roboResultsTitle">Your Risk & Recommendations</h3>
+      <div id="roboResultsBody" style="margin-top:12px;display:flex;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <div id="roboScore" style="font-size:28px;font-weight:700"></div>
+          <div id="roboRiskLevel" class="muted" style="margin-top:6px"></div>
+          <div id="roboRecList" style="margin-top:12px"></div>
+        </div>
+        <div style="flex:1;min-width:280px">
+          <canvas id="roboAllocationChart" style="max-height:320px"></canvas>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button id="roboResultsClose" class="btn">Close</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "kpis": { "users": 12540, "aum_myr": 8712345, "avg_ticket_myr": 86 },
+  "feesComparison": [
+    { "name": "PocketWealth", "bps": 35 },
+    { "name": "Competitor A", "bps": 80 },
+    { "name": "Competitor B", "bps": 75 },
+    { "name": "Competitor C", "bps": 60 }
+  ],
+  "allocation": { "ESG": 55, "Shariah": 45 },
+  "aumGrowthMonthly": [120,150,190,250,330,430,560,720,930,1180,1500,1900]
+}

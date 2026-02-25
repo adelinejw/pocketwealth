@@ -1,0 +1,249 @@
+:root{
+  --primary:#0A84FF; --primary-dark:#0B5CCB; --accent:#4FB7F3; --text:#0F172A; --subtext:#475569; --bg:#F8FAFC; --success:#22C55E; --warning:#F59E0B;
+  --radius:16px; --card-radius:20px; --glass:rgba(255,255,255,0.6);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--text); background:var(--bg); margin:0; -webkit-font-smoothing:antialiased; position:relative}
+.container{max-width:1120px;margin:0 auto;padding:24px}
+.gradient-text{ background: linear-gradient(90deg,#0b66ff,#3aa0ff,#7c3aed); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.site-header{position:fixed;top:0;left:0;right:0;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75));backdrop-filter: blur(6px);border-bottom:1px solid rgba(15,23,42,0.04);z-index:40}
+.header-inner{display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-text{font-weight:700}
+.main-nav{flex:1}
+.main-nav ul{display:flex;list-style:none;gap:18px;padding:0;margin:0;justify-content:center}
+.main-nav a{color:var(--subtext);text-decoration:none}
+.header-cta{margin-left:auto}
+.btn{border:0;padding:10px 16px;border-radius:12px;font-weight:600;cursor:pointer}
+.btn:focus{outline:3px solid rgba(10,132,255,0.18)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-cta{background:linear-gradient(90deg,var(--primary),var(--primary-dark));color:#fff;padding:12px 18px;border-radius:14px}
+.btn-secondary{background:#fff;border:1px solid rgba(15,23,42,0.06)}
+.btn-success{background:var(--success);color:#fff}
+.mobile-toggle{display:none;background:none;border:0;font-size:20px}
+
+.hero{padding-top:96px;padding-bottom:48px}
+.hero-grid{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
+.hero-copy h1{font-size:40px;margin:0 0 12px}
+.lead{color:var(--subtext);max-width:56ch}
+.hero-ctas{display:flex;gap:12px;margin-top:16px}
+.trust-row{display:flex;gap:12px;margin-top:18px;color:var(--subtext)}
+/* Hero trust: left-aligned, wraps on small screens */
+.hero-trust, .trust-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:12px;color:var(--subtext);font-size:.95rem;text-align:left}
+.hero .hero-copy{ text-align:left }
+.trust-dot{ width:10px;height:10px;border-radius:999px;background:#DBEAFE;display:inline-block;box-shadow:0 0 0 2px #E2E8F0 inset;margin-right:.25rem }
+.trust-divider{ width:1px;height:14px;background:#E2E8F0;display:inline-block;margin:0 8px }
+.divider{ width:1px;height:14px;background:#E2E8F0;display:inline-block;margin:0 8px }
+.hero-visual{display:flex;justify-content:center}
+.wallet-wrap{background:linear-gradient(180deg,var(--accent),var(--primary));padding:28px;border-radius:24px;box-shadow:0 10px 30px rgba(11,92,203,0.12);width:320px;position:relative;display:flex;flex-direction:column;align-items:center}
+.wallet-mascot{width:180px;transition:transform .36s cubic-bezier(.2,.9,.2,1)}
+.wallet-wrap:hover .wallet-mascot{transform:translateY(-8px) scale(1.04)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{background:rgba(255,255,255,0.12);padding:6px 10px;border-radius:999px;color:#fff;font-weight:600}
+
+
+
+.charts{margin-top:18px}
+.charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{
+  background: #fff;
+  /* subtle card gradient to match app look */
+  background-image: linear-gradient(180deg,#ffffff,#fbfdff);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(11,22,34,0.06);
+  margin: 8px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.card:hover{transform: translateY(-4px); box-shadow:0 16px 36px rgba(11,22,34,0.10)}
+.card.wide{grid-column:1/-1}
+
+/* Partnership card specific styles */
+.card.wide.partnership {
+  margin-bottom: 24px; /* spacing to the cards below */
+}
+.partnership-content {
+  max-width: 820px;
+}
+.partnership-main {
+  font-size: 20px;
+  margin: 0 0 6px 0;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+.partnership-sub {
+  font-size: 14px;
+  color: #444;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+.card.wide.partnership p {
+  margin: 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Two-column layout for partnership card: left text, right media */
+.partnership-grid{
+  display:grid;
+  grid-template-columns: 1fr 260px;
+  gap:18px;
+  align-items:center;
+}
+.partnership-media{display:flex;align-items:center;justify-content:flex-end}
+.partnership-media img{max-width:220px;height:auto;display:block}
+
+@media (max-width:900px){
+  .partnership-grid{grid-template-columns:1fr;gap:12px}
+  .partnership-media{justify-content:flex-start}
+  .partnership-media img{max-width:180px}
+}
+
+.section{padding-top:28px;padding-bottom:28px}
+.cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+
+/* FAQ styles: attractive accordion with search */
+.faq-section .faq-controls{ margin:12px 0 18px; display:flex; justify-content:center }
+.faq-search{ width:100%; max-width:640px; padding:12px 14px; border-radius:12px; border:1px solid rgba(15,23,42,0.06); box-shadow:0 6px 20px rgba(11,22,34,0.04); font-size:15px }
+.faq-list{ display:flex; flex-direction:column; gap:12px; margin-top:12px }
+.faq-list details{ background: linear-gradient(180deg,#ffffff,#fbfdff); border-radius:14px; padding:14px 16px; box-shadow: 0 8px 28px rgba(11,22,34,0.06); overflow:hidden; }
+.faq-list summary{ list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0; outline:none }
+.faq-list summary::-webkit-details-marker{ display:none }
+.faq-q{ font-weight:700; color:var(--text) }
+.faq-list p{ margin:10px 0 0; color:var(--subtext); line-height:1.5 }
+.faq-toggle{ width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; background:linear-gradient(90deg, rgba(11,102,255,0.08), rgba(124,58,237,0.06)); color:var(--primary-dark); font-weight:700; transform:rotate(0); transition: transform 240ms ease }
+.faq-list details[open] .faq-toggle{ transform:rotate(45deg); background:linear-gradient(90deg,var(--primary),var(--primary-dark)); color:#fff }
+.faq-list details[open]{ transform: translateY(-2px); box-shadow: 0 18px 48px rgba(11,22,34,0.08) }
+
+@media (max-width:700px){ .faq-search{ width:100%; max-width:100%; } .faq-list details{ padding:12px } }
+
+/* modifier to add separation when a wide card sits above the grid */
+.cards-grid--spaced {
+  margin-top: 24px;
+}
+.feature{padding:18px;text-align:left}
+.feature-icon{font-size:28px;margin-bottom:8px}
+.timeline-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step{padding:16px;text-align:center}
+.premium-grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+.premium-card{display:flex;align-items:center;justify-content:center}
+.bullets{padding-left:18px}
+.muted{color:var(--subtext)}
+.small{font-size:13px}
+
+.modal-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.38);backdrop-filter: blur(4px);z-index:80}
+.modal{background:#fff;padding:20px;border-radius:16px;width:min(520px,94%);box-shadow:0 20px 60px rgba(2,6,23,0.2)}
+.modal-form{display:flex;flex-direction:column;gap:10px}
+.modal input{padding:10px;border-radius:10px;border:1px solid rgba(15,23,42,0.06)}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+.hidden{display:none}
+
+.cta-strip{background:linear-gradient(90deg,rgba(10,132,255,0.06),rgba(11,92,203,0.04));padding:18px;margin-top:28px;border-top:1px solid rgba(15,23,42,0.03)}
+.cta-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.join-form{display:flex;gap:8px}
+.join-form input{padding:10px;border-radius:10px;border:1px solid rgba(15,23,42,0.06)}
+
+.site-footer{padding:28px 0;margin-top:10px}
+.footer-grid{display:flex;justify-content:space-between;align-items:center;gap:12px}
+
+/* App mode helpers */
+.hidden { display: none !important; }
+
+/* When in app mode, hide the landing header + marketing sections entirely */
+body.app-mode #site-header,
+body.app-mode #marketing-site { display: none !important; }
+
+/* App shell layout and toolbar */
+.app-shell { min-height: 100vh; background: var(--bg); }
+.app-toolbar{ position: sticky; top: 0; z-index: 10; display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:0.75rem 1rem; background:#FFF; border-bottom:1px solid #E2E8F0; box-shadow:0 2px 10px rgba(0,0,0,0.03); }
+.app-toolbar .left{ display:flex; align-items:center; gap:.6rem }
+.app-logo{ width:28px; height:28px; border-radius:6px; display:block }
+.app-title{ font-weight:600; color:var(--text) }
+.app-toolbar .right{ display:flex; align-items:center; gap:.6rem }
+.user-email{ font-size:.9rem; color:#334155 }
+.app-content{ padding:1rem }
+.btn-secondary{ background:#E2E8F0; border:none; color:var(--text); padding:.6rem 1rem; border-radius:9999px; cursor:pointer }
+.btn-secondary:hover{ background:#CBD5E1 }
+
+/* small user status in header */
+.user-status{ font-size:0.9rem; color:#0f172a; background:linear-gradient(180deg, rgba(11,102,255,0.06), rgba(255,255,255,0.02)); padding:6px 10px; border-radius:10px; border:1px solid rgba(11,22,34,0.04); display:inline-flex; align-items:center; gap:8px; min-width:180px; justify-content:flex-end }
+@media (max-width:520px){ .user-status{ display:none } }
+
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .charts-grid{grid-template-columns:1fr}
+  .cards-grid{grid-template-columns:repeat(2,1fr)}
+  .timeline-grid{grid-template-columns:repeat(2,1fr)}
+  .main-nav ul{display:none}
+  .mobile-toggle{display:block}
+}
+
+@media (max-width:520px){
+  .cards-grid{grid-template-columns:1fr}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+
+/* Soft aurora background for marketing site (match app look) */
+/* Only show when not in app mode so the app shell styling remains clean */
+body:not(.app-mode)::before{
+  content:"";
+  position:fixed;
+  inset:-100px -60px; /* extend beyond viewport for blur */
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(1200px 600px at 8% 12%, rgba(11,102,255,0.18), transparent 60%),
+    radial-gradient(900px 520px at 82% 0%, rgba(124,58,237,0.18), transparent 60%),
+    radial-gradient(800px 520px at 50% 92%, rgba(0,179,122,0.16), transparent 60%);
+  filter: blur(40px);
+  animation: auroraFloatMarketing 24s ease-in-out infinite alternate;
+}
+@keyframes auroraFloatMarketing{
+  0%{ transform: translateY(-6px) }
+  50%{ transform: translateY(6px) }
+  100%{ transform: translateY(-6px) }
+}
+@media (prefers-reduced-motion: reduce){
+  body:not(.app-mode)::before{ animation:none }
+}
+
+/* Premium plans (marketing) — match app look for Pro highlight */
+.premium-section .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.premium-two-col .card{position:relative}
+.premium-two-col .card.pro{
+  position:relative;
+  border-radius:16px;
+  border:2px solid transparent;
+  border-image: linear-gradient(90deg, #ffd89b, #ff7eb3, #7bc6ff) 1;
+  box-shadow: 0 8px 28px rgba(11,22,34,0.06);
+  padding-top:22px; /* room for badge */
+}
+.premium-two-col .card.pro .pro-badge{
+  position:absolute;
+  top:-12px;
+  right:16px;
+  background: linear-gradient(90deg,#ff7eb3,#7bc6ff);
+  color:#fff;
+  padding:6px 12px;
+  border-radius:16px;
+  font-weight:700;
+  font-size:12px;
+  box-shadow: 0 12px 30px rgba(11,22,34,0.12);
+  z-index:3;
+}
+@media (max-width:700px){ .premium-section .two-col{grid-template-columns:1fr} }
+
+/* Highlight animation when navigating to Premium via "Why Premium?" button */
+.pulse-highlight{ position:relative; }
+.pulse-highlight::after{
+  content:""; position:absolute; inset:0; border-radius:24px; pointer-events:none;
+  background:radial-gradient(circle at 50% 50%, rgba(255,208,0,0.35), rgba(255,208,0,0) 70%);
+  animation:pulseFade 1.4s ease-out forwards;
+  mix-blend-mode:overlay;
+}
+@keyframes pulseFade{ 0%{ opacity:0; transform:scale(.85);} 20%{opacity:1;} 100%{opacity:0; transform:scale(1.25);} }

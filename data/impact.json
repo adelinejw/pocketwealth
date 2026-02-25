@@ -1,0 +1,8 @@
+{
+  "summary": { "portfolioCarbon": "12.3 tCO2e", "diversityScore": 72 },
+  "etfs": {
+    "SPY": { "esgScore": 60 },
+    "EIMY": { "esgScore": 68 },
+    "AGG": { "esgScore": 45 }
+  }
+}

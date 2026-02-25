@@ -1,0 +1,7 @@
+{
+  "portfolios": [
+    {"id":"conservative","name":"Conservative","risk":1,"allocation":{"MYETF1":20,"MYETF2":10,"MYETF3":50,"MYETF4":20},"var99":5},
+    {"id":"balanced","name":"Balanced","risk":2,"allocation":{"MYETF1":35,"MYETF2":25,"MYETF3":25,"MYETF4":15},"var99":9},
+    {"id":"growth","name":"Growth","risk":3,"allocation":{"MYETF1":45,"MYETF2":35,"MYETF3":10,"MYETF4":10},"var99":14}
+  ]
+}

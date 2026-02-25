@@ -1,0 +1,146 @@
+:root{ --blue:#0b66ff; --muted:#6b7280; --bg:#f7f9ff; --card:#ffffff; }
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:var(--bg); color:#0b1724}
+.app-root{max-width:980px; margin:28px auto; padding:20px}
+.app-header{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.app-header .brand{height:36px}
+.app-header .left{display:flex; align-items:center; gap:8px}
+.app-header .right{display:flex; align-items:center; gap:12px}
+.app-content{display:flex; flex-direction:column; align-items:center; text-align:center; padding:28px 12px}
+.app-content h1{font-size:1.4rem; margin:0 0 8px}
+.btn{padding:8px 12px; border-radius:8px; border:1px solid rgba(11,102,255,0.12); background:var(--blue); color:#fff}
+.btn-ghost{background:transparent; border:none; color:var(--blue); font-weight:600}
+.muted{color:var(--muted)}
+.card{background:var(--card); padding:18px; border-radius:12px; box-shadow:0 6px 18px rgba(11,22,34,0.04); margin-top:14px}
+.app-footer{margin-top:30px; text-align:center}
+
+/* Learning page styles */
+.learning-hero{ display:grid; grid-template-columns: 1.2fr 1fr; gap:18px; align-items:center; padding:28px; background: linear-gradient(180deg,#f6fff8,#ffffff); }
+.learning-hero-content{ text-align:left; }
+.learning-hero h1{ margin:0 0 8px; }
+.gradient-title{ background: linear-gradient(90deg,#0b66ff,#3aa0ff,#7c3aed); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.learning-hero-illustration{ width:100%; max-width:560px; height:auto; aspect-ratio: 7 / 4; background: linear-gradient(90deg,#e6ffed,#f0fff6); border-radius:16px; box-shadow: 0 10px 30px rgba(11,22,34,0.08), inset 0 -6px 20px rgba(11,102,255,0.02); margin-top:0; overflow:hidden; display:flex; align-items:center; justify-content:center; margin-left:auto }
+.learning-hero-illustration .learning-hero-img{ width:100%; height:100%; object-fit:cover; object-position:center; display:block; border-radius:16px }
+@media (max-width: 820px){
+	.learning-hero{ grid-template-columns: 1fr; text-align:center }
+	.learning-hero-content{ text-align:center }
+	.learning-hero-illustration{ margin-top:12px; margin-left:0 }
+}
+.learning-content{ display:flex; flex-direction:column; gap:16px; width:100%; margin-top:16px }
+.learning-section{ text-align:left }
+.learning-cards{ display:flex; gap:12px; flex-wrap:wrap; margin-top:12px }
+.learn-card{ background:linear-gradient(180deg,#fff,#fbfdff); padding:18px; border-radius:18px; min-width:200px; box-shadow:0 6px 18px rgba(11,22,34,0.04); transition: transform 200ms ease, box-shadow 200ms ease; position:relative; overflow:hidden; }
+.learn-card:hover{ transform: translateY(-6px); box-shadow:0 18px 36px rgba(11,22,34,0.08) }
+.learning-cards.horizontal{ flex-direction:row }
+.learn-card.horizontal{ display:flex; gap:12px; align-items:center }
+
+/* Investing 101: three tall pastel blocks layout */
+#learn-investing101 .learning-cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; align-items:start; }
+#learn-investing101 .learn-card{ min-height:520px; padding:36px; color:#071114; }
+#learn-investing101 h2{ text-align:center; font-size:34px; margin-bottom:6px }
+#learn-investing101 > p.muted{ text-align:center; margin-bottom:18px }
+#learn-investing101 .learn-card h4{ font-size:34px; line-height:1.02; margin:0 0 16px; font-weight:700 }
+#learn-investing101 .learn-card p{ max-width:48ch; margin-top:6px; color:var(--muted); }
+
+/* Pastel backgrounds matching the reference image */
+#learn-investing101 .learn-card:nth-child(1){ background: linear-gradient(180deg,#00d53f,#00c83a); color:#071114 }
+#learn-investing101 .learn-card:nth-child(2){ background: linear-gradient(180deg,#ff5b8f,#ff4f84); color:#071114 }
+#learn-investing101 .learn-card:nth-child(3){ background: linear-gradient(180deg,#ffd4da,#ffc9d0); color:#071114 }
+
+/* Illustration placeholders (decorative) */
+#learn-investing101 .learn-card::after{ content:''; position:absolute; width:44%; height:44%; bottom:18px; right:18px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)); transform: rotate(-6deg); box-shadow: 0 8px 18px rgba(11,22,34,0.06); }
+#learn-investing101 .learn-card:nth-child(1)::after{ left:18px; right:auto; width:40%; height:38%; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.03)); transform: rotate(-10deg); }
+#learn-investing101 .learn-card:nth-child(2)::after{ right:14px; bottom:12px; width:46%; height:40%; transform: rotate(-6deg); background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(0,0,0,0.02)); }
+#learn-investing101 .learn-card:nth-child(3)::after{ right:18px; bottom:8px; width:46%; height:44%; transform: rotate(-4deg); background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(0,0,0,0.02)); }
+
+/* Ensure text remains readable on bright backgrounds */
+#learn-investing101 .learn-card .muted{ color: rgba(3,10,12,0.72); }
+
+/* Options Trading Essentials layout */
+#learn-options{ text-align:center }
+#learn-options h2{ text-align:center; font-size:34px; margin-bottom:6px }
+#learn-options p.muted{ text-align:center; margin-bottom:18px }
+#learn-options .learning-cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; align-items:start; }
+#learn-options .learn-card{ min-height:420px; padding:28px; border-radius:14px; }
+#learn-options .learn-card h4{ font-size:26px; margin-bottom:12px }
+#learn-options .learn-card p{ color:var(--muted); max-width:44ch }
+#learn-options .learn-card:nth-child(1){ background: linear-gradient(180deg,#f1eceb,#f6f3f2); }
+#learn-options .learn-card:nth-child(2){ background: linear-gradient(180deg,#ffd57a,#ffc85a); }
+#learn-options .learn-card:nth-child(3){ background: linear-gradient(180deg,#b8d7cc,#a9cbbf); }
+#learn-options .learn-card::after{ content:''; position:absolute; width:44%; height:36%; bottom:18px; right:18px; border-radius:10px; background:transparent; }
+
+/* Futures Fundamentals layout */
+#learn-futures{ text-align:center }
+#learn-futures h2{ text-align:center; font-size:34px; margin-bottom:6px }
+#learn-futures p.muted{ text-align:center; margin-bottom:18px }
+#learn-futures .learning-cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; align-items:start; }
+#learn-futures .learn-card{ min-height:420px; padding:28px; border-radius:14px; }
+#learn-futures .learn-card h4{ font-size:26px; margin-bottom:12px }
+#learn-futures .learn-card p{ color:var(--muted); max-width:44ch }
+#learn-futures .learn-card:nth-child(1){ background: linear-gradient(180deg,#fde7bf,#fbdca2); }
+#learn-futures .learn-card:nth-child(2){ background: linear-gradient(180deg,#97bfae,#87b29f); color:#fff }
+#learn-futures .learn-card:nth-child(3){ background: linear-gradient(180deg,#2ea1ff,#2190ff); color:#071114 }
+#learn-futures .learn-card::after{ content:''; position:absolute; width:44%; height:36%; bottom:18px; right:18px; border-radius:10px; background:transparent; }
+.learning-faqs details{ margin-top:8px }
+
+/* pastel variants (visual grouping) */
+.learn-card:nth-child(1){ background: linear-gradient(180deg,#f0fff6,#ffffff) }
+.learn-card:nth-child(2){ background: linear-gradient(180deg,#fff6fb,#ffffff) }
+.learn-card:nth-child(3){ background: linear-gradient(180deg,#fbfff9,#ffffff) }
+
+/* Fade-in on scroll */
+.fade-in{ opacity:0; transform: translateY(8px); transition: opacity 420ms ease, transform 420ms cubic-bezier(.2,.9,.2,1) }
+.fade-in.visible{ opacity:1; transform: translateY(0) }
+
+/* Invest & Shariah card grid: equal height cards and bottom-anchored actions */
+.grid.cards{ display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; align-items: stretch; }
+
+/* Invest list: make cards equal height and pin actions to bottom */
+#investList > .card{ height: 100%; display:flex; flex-direction:column; min-height:280px; }
+/* ensure the volatility/hint row occupies the same space across cards */
+.card .volatility-row{ height:44px; min-height:44px; display:flex; align-items:center; justify-content:center; margin-top:6px; }
+.card .volatility-row .muted{ margin:0; text-align:center; width:100%; }
+.subscribe-hint{ color:var(--muted); text-decoration:underline; cursor:pointer; display:inline-block; }
+.subscribe-hint:hover{ color:var(--blue); }
+#investList > .card .card-actions{ margin-top: auto; display:flex; justify-content:center; align-items:center; padding-top:12px; }
+#investList > .card .card-actions .btn{ min-width:120px; }
+
+/* Shariah list: make cards uniform (shorter than Invest cards) */
+/* Shariah grid: stretch cards horizontally to fill the block */
+#shariahList{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; align-items: stretch; justify-items: stretch; grid-auto-rows: 1fr; width:100%; }
+#shariahList > .card{ display:flex; flex-direction:column; min-height:160px; height:100%; width:100%; }
+/* Ensure the parent Shariah section can grow to accommodate stretched cards */
+#shariahSection{ display:flex; flex-direction:column; }
+#shariahList > .card .card-actions{ margin-top: auto; display:flex; justify-content:center; align-items:center; padding-top:10px; }
+
+/* Shariah CTA visuals: center, even spacing, premium badge */
+.shariah-cta{ display:flex; gap:12px; justify-content:center; align-items:center; width:100%; }
+/* make all CTA children share same height and min-width */
+.shariah-cta > *{ display:inline-flex; align-items:center; justify-content:center; min-width:70px; height:36px; padding:6px 10px; border-radius:10px; box-sizing:border-box; }
+.shariah-cta .btn-buy{ background: linear-gradient(180deg,#0b66ff,#0a5ee6); color:#fff; border:none; box-shadow:0 6px 12px rgba(11,102,255,0.08); }
+.shariah-cta .btn-watch{ background:transparent; color:var(--blue); border:1px solid rgba(11,102,255,0.12); }
+.shariah-badge{ background: #e9fff0; color:#05652a; font-weight:600; font-size:12px; gap:6px; }
+.shariah-cta .btn, .shariah-badge{ min-width:70px; text-align:center; }
+.shariah-tick{ display:inline-flex; width:14px; height:14px; align-items:center; justify-content:center; background:#07b237; color:#fff; border-radius:3px; font-size:10px; }
+.shariah-cta .btn-buy:active{ transform: translateY(1px); }
+
+/* ensure white card has extra space at bottom so CTA fits visually */
+.card{ padding-bottom: 22px; }
+
+/* Premium status badge styles */
+#premiumStatus.premium-status{ font-weight:700; padding:4px 8px; border-radius:8px; display:inline-block; }
+#premiumStatus.pro{ color: #D4AF37; /* gold */ }
+#premiumStatus.starter{ color: var(--blue); }
+#premiumStatus.inactive{ color: var(--muted); }
+
+
+/* Robo quiz modal tweaks */
+.modal .quiz-question{ margin:12px 0; text-align:left }
+.modal .quiz-question h4{ margin:0 0 8px; font-size:16px }
+.modal .quiz-choices{ display:flex; gap:8px; flex-wrap:wrap }
+.modal .quiz-choice{ padding:8px 10px; border-radius:8px; background:#f3f6fb; cursor:pointer; border:1px solid rgba(11,22,34,0.04) }
+.modal .quiz-choice.active{ background:var(--blue); color:#fff; border-color:rgba(11,102,255,0.18) }
+.modal .quiz-choice.small{ padding:6px 8px; font-size:14px }
+
+.modal-card{ position:relative }
+

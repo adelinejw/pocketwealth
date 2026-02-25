@@ -1,0 +1,6 @@
+{
+  "snippets": [
+    {"id":"var","title":"Value-at-Risk (VaR)","body":"VaR is a statistical measure that estimates the maximum loss over a target horizon with a given confidence level. For example, VaR(99%) = 10% suggests that with 99% confidence annual loss won't exceed 10%."},
+    {"id":"fees","title":"Fees Explained","body":"Management fees are charged as a percentage of assets under management and are shown in basis points (bps). Lower fees mean more of your returns remain invested."}
+  ]
+}
