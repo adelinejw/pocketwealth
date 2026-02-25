@@ -370,5 +370,48 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="assets/js/app.js" defer></script>
+
+  <style>
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .header-inner {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .main-nav ul {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .mobile-toggle[aria-expanded="true"] + .main-nav ul {
+      display: flex;
+    }
+
+    .hero-grid {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .timeline-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-strip {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .footer-grid {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+  </style>
 </body>
 </html>
